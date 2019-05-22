@@ -23,8 +23,11 @@
         "vue": "^2.5.17"
     },
     "dependencies": {
+        "vue-flash-message": "^0.7.2",
         "vue-kanban": "^1.4.0",
+        "vue-notification": "^1.3.16",
         "vue-template-compiler": "^2.6.10",
+        "vuedraggable": "^2.21.0",
         "vuejs-datepicker": "^1.5.4"
     }
 }
