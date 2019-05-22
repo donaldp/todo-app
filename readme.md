@@ -1,6 +1,14 @@
 ## Todo
 
-<img src="demo,png">
+<p align="center"><img src="app.png"/></p>
+
+### Requirements
+
+* PHP 7.3.*
+* Nodejs 11.0.0 (or > 6.*)
+* NPM 6.5.0
+* Apache2/Nginx
+* MySQL
 
 ### Getting Started
 
