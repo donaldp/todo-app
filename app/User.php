@@ -59,6 +59,7 @@ class User extends Authenticatable
   public function tasksAsJson() : string
   {
     $tasks = $this->tasks()
+                  ->whereIn('status', ['Todo', 'In Progress'])
                   ->orderBy('priority', 'asc')
                   ->orderBy('updated_at', 'desc')
                   ->select('id', 'title', 'description', 'status', 'due')
