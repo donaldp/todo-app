@@ -80,11 +80,11 @@ class User extends Authenticatable
   {
     $tasks = $this->tasks()->whereNotNull('due')
                   ->whereIn('status', ['Todo', 'Progress'])
-                  ->whereDate('due', Carbon::tomorrow())
+                  ->whereDate('due', Carbon::today())
                   ->get();
 
     if (count($tasks) > 0) {
-      Mail::to($this)->send(new TaskAlert($this, count($tasks) == 1 ? "The task \"**{$tasks->first()->title}**\" is due tomorrow." : 'You have ' . count($tasks) . ' tasks due tomorrow'));
+      Mail::to($this)->send(new TaskAlert($this, count($tasks) == 1 ? "The task \"**{$tasks->first()->title}**\" is due today." : 'You have ' . count($tasks) . ' tasks due today'));
     }
   }
 }
