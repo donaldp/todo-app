@@ -71,7 +71,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="newTaskLabel">New Task</h5>
-            <button type="button" class="close" @click="modal.edit.visible = false" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -100,7 +100,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="modal.edit.visible = false">Cancel</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <button type="button" class="btn btn-primary" @click="saveChanges">Update</button>
           </div>
         </div>
@@ -281,7 +281,7 @@
           due: new Date(task.due)
         };
 
-        this.modal.edit.visible = true;
+        $('#edit-task').modal('show');
       },
       /**
        * Save changes
