@@ -32,6 +32,6 @@ class Task extends Model
    */
   public function getDueSoonAttribute() : bool
   {
-    return $this->due && (Carbon::parse($this->due)->format('Y-m-d') == Carbon::tomorrow()->format('Y-m-d')) ? true : false;
+    return $this->due && (Carbon::parse($this->due)->format('Y-m-d') == Carbon::today()->format('Y-m-d')) ? true : false;
   }
 }
