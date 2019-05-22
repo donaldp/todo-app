@@ -2,8 +2,12 @@
 
 namespace App;
 
+use Mail;
+use Carbon\Carbon;
+use App\Mail\TaskAlert;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -36,4 +40,51 @@ class User extends Authenticatable
   protected $casts = [
     'email_verified_at' => 'datetime',
   ];
+
+  /**
+   * Get all tasks that belong to the user
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function tasks() : HasMany
+  {
+    return $this->hasMany(Task::class);
+  }
+
+  /**
+   * Return tasks as json string
+   *
+   * @return string
+   */
+  public function tasksAsJson() : string
+  {
+    $tasks = $this->tasks()
+                  ->orderBy('priority', 'asc')
+                  ->orderBy('updated_at', 'desc')
+                  ->select('id', 'title', 'description', 'status', 'due')
+                  ->get()
+                  ->toArray();
+
+    /**
+     * Convert array into a json sgtring
+     */
+    return json_encode($tasks);
+  }
+
+  /**
+   * Alert user about incomeplete tasks
+   *
+   * @return void
+   */
+  public function alert()
+  {
+    $tasks = $this->tasks()->whereNotNull('due')
+                  ->whereIn('status', ['Todo', 'Progress'])
+                  ->whereDate('due', Carbon::tomorrow())
+                  ->get();
+
+    if (count($tasks) > 0) {
+      Mail::to($this)->send(new TaskAlert($this, count($tasks) == 1 ? "The task \"**{$tasks->first()->title}**\" is due tomorrow." : 'You have ' . count($tasks) . ' tasks due tomorrow'));
+    }
+  }
 }
