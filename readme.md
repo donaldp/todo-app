@@ -24,7 +24,9 @@ Install PHP dependencies:
 composer install
 ```
 
-Install JavaScript dependencies:
+Install JavaScript dependencies (Optional):
+
+> Run only if you would like to make changes to the front-end
 
 ```bash
 npm install
